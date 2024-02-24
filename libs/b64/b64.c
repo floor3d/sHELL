@@ -1,6 +1,6 @@
-#include <windows.h>
-
 #include "../include/sHELL.h"
+#include "wincrypt.h"
+#include <windows.h>
 
 const char Name[] = "b64";
 const char Help[] =
@@ -33,7 +33,17 @@ __declspec(dllexport) VOID CommandCleanup() {
 // Utility function to encode a string to base64
 BOOL Base64Encode(const char *input, char **output, DWORD *outputSize) {
   // // your answer here
-  return TRUE;
+  DWORD inputSize = lstrlenA(input);
+  return CryptStringToBinaryA(input, inputSize, CRYPT_STRING_BASE64,
+                              (BYTE *)*output, outputSize, NULL, NULL);
+}
+
+// Utility function to decode a string to base64
+BOOL Base64Decode(const char *input, char **output, DWORD *outputSize) {
+  // // your answer here
+  DWORD inputSize = lstrlenA(input);
+  return CryptBinaryToStringA((BYTE *)input, inputSize, CRYPT_STRING_BASE64,
+                              *output, outputSize);
 }
 
 // Exported function - Run
