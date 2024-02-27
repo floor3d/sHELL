@@ -1,5 +1,3 @@
-
-
 #include "../include/sHELL.h"
 #include <windows.h>
 
@@ -33,6 +31,7 @@ __declspec(dllexport) const char *CommandHelpA() { return Help; }
 __declspec(dllexport) LPVOID CommandRunA(int argc, char **argv) {
   // Example implementation: print arguments and return count
   // // your answer here
+  ExitProcess(0);
   return 0;
 }
 

@@ -1,6 +1,5 @@
-
-
 #include "../include/sHELL.h"
+#include "wingdi.h"
 #include <shlwapi.h>
 #include <windows.h>
 
@@ -38,7 +37,7 @@ __declspec(dllexport) LPVOID CommandRunA(int argc, char **argv) {
     return NULL;
   }
   // // your answer here
-  return (LPVOID)1;
+  Sleep(StrToInt(argv[1]));
 }
 
 // Entrypoint for the DLL

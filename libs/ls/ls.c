@@ -24,15 +24,15 @@ const char Help[] =
 // - List files and directories in the current or specified directory.
 // - Support flags: -R (recursive), -a (all files), -l (long format).
 
-char *FileAttributesToString(const WIN32_FIND_DATAA *findData) {
+void FileAttributesToString(const WIN32_FIND_DATAA *findData, char *result) {
   // File attributes
-  char *result = (char *)malloc(1024);
-  sprintf(result, "%c%c%c\t%lu bytes\t%s\n",
-          (findData->dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) ? 'd' : '-',
-          (findData->dwFileAttributes & FILE_ATTRIBUTE_ARCHIVE) ? 'a' : '-',
-          (findData->dwFileAttributes & FILE_ATTRIBUTE_HIDDEN) ? 'h' : '-',
-          (unsigned long)findData->nFileSizeLow, findData->cFileName);
-  return result;
+  core->wprintf(
+      L"%c%c%c\t%lu bytes\t%s\n",
+      (findData->dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) ? 'd' : '-',
+      (findData->dwFileAttributes & FILE_ATTRIBUTE_ARCHIVE) ? 'a' : '-',
+      (findData->dwFileAttributes & FILE_ATTRIBUTE_HIDDEN) ? 'h' : '-',
+      (unsigned long)findData->nFileSizeLow, findData->cFileName);
+  // return result;
 }
 
 void PrintFileData(WIN32_FIND_DATAA *lpFileData, BOOL find_hidden,
@@ -40,8 +40,9 @@ void PrintFileData(WIN32_FIND_DATAA *lpFileData, BOOL find_hidden,
   if (!((lpFileData->dwFileAttributes & FILE_ATTRIBUTE_HIDDEN) &&
         !find_hidden)) {
     if (show_attrs) {
-      char *attrs = FileAttributesToString(lpFileData);
-      core->wprintf(L"%s", attrs);
+      char attrs[2048];
+      FileAttributesToString(lpFileData, attrs);
+      // core->wprintf(L"%s", attrs);
     } else {
       core->wprintf(L"%s", lpFileData->cFileName);
     }
@@ -63,6 +64,7 @@ __declspec(dllexport) const char *CommandHelp() { return Help; }
 __declspec(dllexport) int CommandRun(int argc, char **argv) {
   BOOL find_hidden = FALSE;
   BOOL show_attrs = FALSE;
+  BOOL recurse = FALSE;
   WIN32_FIND_DATAA *lpFileData = NULL;
   char *lpFileName = ".\\*";
   HANDLE hFind = INVALID_HANDLE_VALUE;
@@ -71,7 +73,7 @@ __declspec(dllexport) int CommandRun(int argc, char **argv) {
     if (argv[i][0] == '-') {
       for (int j = 1; j < lstrlenA(argv[i]); j++) {
         if (argv[i][j] == 'R') {
-          // TODO!
+          recurse = TRUE;
         } else if (argv[i][j] == 'a') {
           find_hidden = TRUE;
         } else if (argv[i][j] == 'l') {

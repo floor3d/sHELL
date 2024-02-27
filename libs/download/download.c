@@ -35,7 +35,16 @@ __declspec(dllexport) LPVOID CommandRunA(int argc, char **argv) {
     return (LPVOID)1; // Error code for invalid arguments
   }
   // // your answer here
-  return (LPVOID)1; // Success
+  HRESULT hr = URLDownloadToFileA(NULL, argv[1], argv[2], 0, NULL);
+
+  if (SUCCEEDED(hr)) {
+    // Download successful
+  } else {
+    // Download failed
+    core->wprintf(L"Error downloading file. HRESULT: 0x%x\n", hr);
+  }
+
+  return 0;
 }
 
 // Entrypoint for the DLL
