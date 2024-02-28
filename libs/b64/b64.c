@@ -39,17 +39,11 @@ BOOL Base64Encode(const char *input, char **output, DWORD *outputSize) {
 }
 
 // Utility function to decode a string to base64
-BOOL Base64Decode(const char *input, char **output, DWORD *outputSize) {
+BOOL Base64Decode(const char *input, BYTE **output, DWORD *outputSize) {
   // // your answer here
   DWORD inputSize = lstrlenA(input);
   return CryptBinaryToStringA((BYTE *)input, inputSize, CRYPT_STRING_BASE64,
                               *output, outputSize);
-}
-
-// Utility function to decode a base64 string
-BOOL Base64Decode(const char *input, BYTE **output, DWORD *outputSize) {
-  // // your answer here
-  return TRUE;
 }
 
 // Exported function - Run
