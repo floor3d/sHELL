@@ -46,6 +46,12 @@ BOOL Base64Decode(const char *input, char **output, DWORD *outputSize) {
                               *output, outputSize);
 }
 
+// Utility function to decode a base64 string
+BOOL Base64Decode(const char *input, BYTE **output, DWORD *outputSize) {
+  // // your answer here
+  return TRUE;
+}
+
 // Exported function - Run
 __declspec(dllexport) LPVOID CommandRunA(int argc, char **argv) {
   if (argc != 3) {
