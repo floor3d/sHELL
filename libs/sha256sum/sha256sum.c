@@ -121,7 +121,7 @@ __declspec(dllexport) LPVOID CommandRunA(int argc, char **argv) {
   // Example implementation: print arguments and return count
   if (argc != 2) {
     core->wprintf(L"Usage: %s input_to_hash", argv[0]);
-    return -1;
+    return NULL;
   }
   HashInput(argv[1]);
   return 0;

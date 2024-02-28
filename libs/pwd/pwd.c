@@ -33,13 +33,24 @@ __declspec(dllexport) const char *CommandHelpA() { return Help; }
 // Exported function - Run
 __declspec(dllexport) LPVOID CommandRunA(int argc, char **argv) {
   // Allocate a buffer for the current working directory path
+  DWORD dwRet;
   DWORD bufferSize = MAX_PATH;
   char *cwd = (char *)core->malloc(bufferSize);
   if (cwd == NULL) {
     core->wprintf(L"Failed to allocate memory for CWD.\n");
-    return 1; // Error code for memory allocation failure
+    return NULL; // Error code for memory allocation failure
   }
   // // your answer here
+  // stolen from win32 api
+  dwRet = GetCurrentDirectory(bufferSize, cwd);
+  if (dwRet == 0) {
+    core->wprintf("GetCurrentDirectory failed (%d)\n", GetLastError());
+    return NULL;
+  }
+  if (dwRet > bufferSize) {
+    core->wprintf("Buffer too small; need %d characters\n", dwRet);
+    return NULL;
+  }
   return lpOut; // Success
 }
 
