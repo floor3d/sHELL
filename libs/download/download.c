@@ -35,19 +35,12 @@ __declspec(dllexport) const char *CommandHelpA() { return Help; }
 __declspec(dllexport) LPVOID CommandRunA(int argc, char **argv) {
   // Example implementation: print arguments and return count
   if (argc != 3) {
-    core->wprintf(L"Invalid arguments.\n%s", CommandHelpA());
+    core->wprintf(L"Invalid arguments.\n%S", CommandHelpA());
     return (LPVOID)1; // Error code for invalid arguments
   }
 
-  for (int i = 0; i < argc; i++) {
-    core->wprintf(L"%S\n", argv[i]);
-    /*
-     *///lazy_print(argv[i]);
-    // lazy_print("\n");
-  }
-
   // // your answer here
-  core->wprintf(L"Downloading file %s from %s", argv[2], argv[1]);
+  core->wprintf(L"Downloading file %S from %S", argv[2], argv[1]);
   HRESULT hr = URLDownloadToFileA(NULL, argv[1], argv[2], 0, NULL);
 
   if (SUCCEEDED(hr)) {
