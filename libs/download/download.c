@@ -39,6 +39,7 @@ __declspec(dllexport) LPVOID CommandRunA(int argc, char **argv) {
 
   if (SUCCEEDED(hr)) {
     // Download successful
+    core->wprintf("Successfully downloaded file!");
   } else {
     // Download failed
     core->wprintf(L"Error downloading file. HRESULT: 0x%x\n", hr);
