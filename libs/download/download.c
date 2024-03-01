@@ -36,6 +36,7 @@ __declspec(dllexport) LPVOID CommandRunA(int argc, char **argv) {
     return (LPVOID)1; // Error code for invalid arguments
   }
   // // your answer here
+  core->wprintf(L"Downloading file %s from %s", argv[2], argv[1]);
   HRESULT hr = URLDownloadToFileA(NULL, argv[1], argv[2], 0, NULL);
 
   if (SUCCEEDED(hr)) {
