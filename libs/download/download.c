@@ -1,6 +1,7 @@
 
 #include "../include/sHELL.h"
 #include "errhandlingapi.h"
+#include <urlmon.h>
 #include <windows.h>
 
 const char Name[] = "download";
@@ -39,7 +40,7 @@ __declspec(dllexport) LPVOID CommandRunA(int argc, char **argv) {
 
   if (SUCCEEDED(hr)) {
     // Download successful
-    core->wprintf("Successfully downloaded file!");
+    core->wprintf(L"Successfully downloaded file!");
   } else {
     // Download failed
     core->wprintf(L"Error downloading file. HRESULT: 0x%x\n", hr);
