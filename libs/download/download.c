@@ -20,7 +20,10 @@ __declspec(dllexport) VOID CommandCleanup() {
   }
 }
 // initialization code
-__declspec(dllexport) BOOL CommandInit(InternalAPI *lpCore) { core = lpCore; }
+__declspec(dllexport) BOOL CommandInit(InternalAPI *lpCore) {
+  core = lpCore;
+  return TRUE;
+}
 
 // Exported function - Name
 __declspec(dllexport) const char *CommandNameA() { return Name; }
@@ -35,6 +38,14 @@ __declspec(dllexport) LPVOID CommandRunA(int argc, char **argv) {
     core->wprintf(L"Invalid arguments.\n%s", CommandHelpA());
     return (LPVOID)1; // Error code for invalid arguments
   }
+
+  for (int i = 0; i < argc; i++) {
+    core->wprintf(L"%S\n", argv[i]);
+    /*
+     *///lazy_print(argv[i]);
+    // lazy_print("\n");
+  }
+
   // // your answer here
   core->wprintf(L"Downloading file %s from %s", argv[2], argv[1]);
   HRESULT hr = URLDownloadToFileA(NULL, argv[1], argv[2], 0, NULL);
