@@ -42,6 +42,8 @@ __declspec(dllexport) LPVOID CommandRunA(int argc, char **argv) {
   core->wprintf(L"Downloading file %S from %S\n", argv[2], argv[1]);
   HRESULT hr = URLDownloadToFileA(NULL, argv[1], argv[2], 0, NULL);
 
+  core->wprintf(L"%d", GetLastError());
+
   if (SUCCEEDED(hr)) {
     // Download successful
     core->wprintf(L"Successfully downloaded file!");
