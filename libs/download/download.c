@@ -39,14 +39,14 @@ __declspec(dllexport) LPVOID CommandRunA(int argc, char **argv) {
     return (LPVOID)1; // Error code for invalid arguments
   }
   // // your answer here
+  // for some reason this does not work on the azure instance. Do it somewhere
+  // else skull emoji x7
   core->wprintf(L"Downloading file %S from %S\n", argv[2], argv[1]);
   HRESULT hr = URLDownloadToFileA(NULL, argv[1], argv[2], 0, NULL);
 
-  core->wprintf(L"error is %d\n", GetLastError());
-
   if (SUCCEEDED(hr)) {
     // Download successful
-    core->wprintf(L"Successfully downloaded file!");
+    core->wprintf(L"Successfully downloaded file %S!\n", argv[2]);
   } else {
     // Download failed
     core->wprintf(L"Error downloading file. HRESULT: 0x%x\n", hr);
